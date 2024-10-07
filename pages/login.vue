@@ -42,8 +42,8 @@
 
     const error = ref(false);
 
-	const usernameCookie = useCookie("username");
-	const passwordCookie = useCookie("password");
+	const usernameCookie = useCookie("username", { expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000) });
+	const passwordCookie = useCookie("password", { expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000) });
 
 	async function login() {
 		usernameValid.value = username.value !== "";
