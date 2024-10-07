@@ -11,7 +11,7 @@
 				<UPagination v-model="page" :total="data.length" class="mb-4" />
 			</div>
 			<UTable :rows="schedule[page - 1]" class="w-full" />
-			<button @click="console.log('logout')" class="mt-5 p-2 bg-primary text-white rounded">Anmeldedaten zurücksetzen</button>
+			<button @click="logout()" class="mt-5 p-2 bg-primary text-white rounded">Anmeldedaten zurücksetzen</button>
 		</div>
 	</ClientOnly>
 </template>
@@ -53,4 +53,9 @@
 			});
 		});
 	});
+
+	function logout() {
+		username.value = "";
+		password.value = "";
+	}
 </script>
