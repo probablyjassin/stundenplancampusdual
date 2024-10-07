@@ -11,7 +11,8 @@
                 Anders als auf CampusDual, werden die Daten nur einmal gefetched; <br>
                 zwischen Einträgen wechseln dauert also keine Ewigkeit!
             </p>
-            <a class="text-accent underline" href="https://github.com/probablyjassin/studenplancampusdual">Zum Github-Repo</a>
+            <p>Zum Github-Repo:</p>
+            <a class="text-accent underline" href="https://github.com/probablyjassin/studenplancampusdual">probablyjassin/stundenplancampusdual</a>
         </div>
     </div>
 </template>
