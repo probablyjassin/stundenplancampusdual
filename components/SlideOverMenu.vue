@@ -11,7 +11,9 @@
             padded
             @click="isOpen = false"
         />
-        <Placeholder class="h-full" />
+        <div>
+            <p>slideover</p>
+        </div>
         </div>
     </USlideover>
 </template>
