@@ -24,7 +24,18 @@
 
 	const groupedByDay = ref({});
 	const data = ref([]);
-	const schedule = computed(() => {
+	const schedule = computed(() => Object.values(groupedByDay.value));
+
+	watch(groupedByDay.value, (newVal) => {
+		page.value = Object.keys(newVal).indexOf(today.toString())+1;
+	});
+
+	onMounted(async () => {
+		const response = await $fetch(
+			`https://corsproxy.io/?https%3A%2F%2Fselfservice.campus-dual.de%2Froom%2Fjson%3Fuserid%3D${username.value}%26hash%3D${password.value}`
+		);
+		data.value = response;
+
 		data.value.forEach((item) => {
 			const day = new Date(item["start"] * 1000).setHours(0, 0, 0, 0);
 
@@ -40,21 +51,5 @@
 				Bemerkungen: item["remarks"] || "---",
 			});
 		});
-
-		return Object.values(groupedByDay.value);
-	});
-
-	onMounted(async () => {
-		const response = await $fetch(
-			`https://corsproxy.io/?https%3A%2F%2Fselfservice.campus-dual.de%2Froom%2Fjson%3Fuserid%3D${username.value}%26hash%3D${password.value}`
-		);
-		data.value = response;
-
-		console.log(groupedByDay.value);
-		console.log(groupedByDay.value[today]);
-		/* console.log(groupedByDay.value)
-        if (groupedByDay.value[today]) {
-            page.value = Object.keys(groupedByDay.value).indexOf(today) + 1;
-        } */
 	});
 </script>
