@@ -1,9 +1,15 @@
 <template>
-	<p class="text-3xl">Login</p>
-	<p>Benutzername: Matrikelnummer (500xxx)</p>
-	<div>
-		<p>Passwort: Hash von der Campus-Dual API</p>
-		<NuxtLink to="/hash" class="text-blue-400 underline">(Wie bekomme ich den?)</NuxtLink>
+	<div class="container mx-auto p-4">
+		<p class="text-3xl">Login</p>
+		<p>
+			<span class="text-primary">Benutzername:</span> Matrikelnummer (500xxx)
+		</p>
+		<div>
+			<span>
+				<span class="text-primary">Passwort:</span> Hash von der Campus-Dual API
+			</span>
+			<NuxtLink to="/hash" class="text-accent underline">(Wie bekomme ich den?)</NuxtLink>
+		</div>
 	</div>
 	<div class="flex flex-col space-y-5 max-w-md mx-auto">
 		<input
@@ -29,7 +35,6 @@
 		<button @click="login()" class="p-3 bg-primary text-text rounded">Login</button>
 		<p v-if="error" class="text-red-500 text-sm">Der Login ist fehlgeschlagen. Überprüfe ob du tatsächlich deinen aktuellen Hash von der CampusDual API hast.</p>
 	</div>
-	<NuxtLink to="/">Home</NuxtLink>
 </template>
 
 <script setup>
