@@ -26,7 +26,7 @@
 			class="p-2 border rounded" />
 		<p v-if="!passwordValid" class="text-red-500 text-sm">Bitte geben Sie ein Passwort ein.</p>
 
-		<button @click="login()" class="p-3 bg-primary text-white rounded">Login</button>
+		<button @click="login()" class="p-3 bg-primary text-text rounded">Login</button>
 		<p v-if="error" class="text-red-500 text-sm">Der Login ist fehlgeschlagen. Überprüfe ob du tatsächlich deinen aktuellen Hash von der CampusDual API hast.</p>
 	</div>
 	<NuxtLink to="/">Home</NuxtLink>
