@@ -1,5 +1,5 @@
 <template>
-	<div class="min-h-screen flex items-center justify-center space-x-4">
+	<div class="min-h-screen flex-col md:flex-row gap-5 flex items-center justify-center">
 		<div class="p-8 rounded shadow-md w-full max-w-md bg-secondary">
 			<h1 class="text-primary text-xl font-bold mb-4">Wie finde ich mein Passwort (Hash)?</h1>
 			<p class="text-text mb-4">
@@ -9,7 +9,7 @@
                 Dieser setzt sich wenn überhaupt selten zurück, also muss er nicht jedes mal neu geholt werden!
 			</p>
 		</div>
-		<div class="w-1/2">
+		<div class="w-full md:w-1/2">
 			<img src="/images/hash.webp" class="object-cover rounded w-full" />
 		</div>
 	</div>
