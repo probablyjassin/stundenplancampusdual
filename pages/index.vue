@@ -3,7 +3,7 @@
         <div class="flex flex-col space-y-5">
             <p class="text-4xl text-primary font-semibold mb-2">Stundenplan für CampusDual</p>
             <p>
-                Eine simple WebApp, nur für den Stundenplan von CampusDual. <br>
+                Eine simple WebApp, für den Stundenplan von CampusDual. <br>
                 Mit einem Design, dass auf Mobile auch tatsächlich nutzbar ist.
             </p>
             <p>
