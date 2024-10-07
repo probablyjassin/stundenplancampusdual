@@ -9,7 +9,7 @@
             <p>
                 Die Seite ist in NuxtJS mit TailwindCSS geschrieben. <br>
                 Anders als auf CampusDual, werden die Daten nur einmal gefetched; <br>
-                zwischen Tagen und Wochen wechseln dauert also keine 5 Sekunden!
+                zwischen Einträgen wechseln dauert also keine Ewigkeit!
             </p>
             <a class="text-accent underline" href="https://github.com/probablyjassin/studenplancampusdual">Zum Github-Repo</a>
         </div>
