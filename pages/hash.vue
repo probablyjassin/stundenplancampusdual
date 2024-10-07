@@ -5,7 +5,8 @@
 			<p class="text-text mb-4">
 				Der Hash der für CampusDual wie ein Passwort funktioniert, ist in den URL-Parametern der Anfragen enthalten. 
                 Drücke CTRL+Shift+I um die Konsole zu öffnen und öffne unter "Netzwerk" die Anfrage. <br><br>
-                Diesen Hash benutzt du hier im Login als Passwort.
+                Diesen Hash benutzt du hier im Login als Passwort. <br>
+                Dieser setzt sich wenn überhaupt selten zurück, also muss er nicht jedes mal neu geholt werden!
 			</p>
 		</div>
 		<div class="w-1/2">
