@@ -5,3 +5,7 @@
     <USlideovers />
   </div>
 </template>
+
+<script setup>
+
+</script>
