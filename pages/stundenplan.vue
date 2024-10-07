@@ -1,25 +1,25 @@
 <template>
-    <ClientOnly>
-        <div class="container mx-auto p-4">
-            <p class="text-3xl font-bold mb-4">Stundenplan</p>
-            <p class="text-lg mb-4">
-                {{
-                    new Date(Number(Object.keys(groupedByDay)[page - 1])).toLocaleDateString("de-DE", { weekday: "long", year: "numeric", month: "long", day: "numeric" })
-                }}
-            </p>
-            <div class="mb-4">
-                <UPagination v-model="page" :total="data.length" class="mb-4" />
-            </div>
-            <UTable :rows="schedule[page - 1]" class="w-full" />
-        </div>
-    </ClientOnly>
+	<ClientOnly>
+		<div class="container mx-auto p-4">
+			<p class="text-3xl font-bold mb-4">Stundenplan</p>
+			<p class="text-lg mb-4">
+				{{
+					new Date(Number(Object.keys(groupedByDay)[page - 1])).toLocaleDateString("de-DE", { weekday: "long", year: "numeric", month: "long", day: "numeric" })
+				}}
+			</p>
+			<div class="mb-4">
+				<UPagination v-model="page" :total="data.length" class="mb-4" />
+			</div>
+			<UTable :rows="schedule[page - 1]" class="w-full" />
+		</div>
+	</ClientOnly>
 </template>
 
 <script setup>
 	const username = useCookie("username");
 	const password = useCookie("password");
 
-	const today = new Date().setHours(0, 0, 0, 0)
+	const today = new Date().setHours(0, 0, 0, 0);
 	const page = ref(1);
 
 	const groupedByDay = ref({});
@@ -49,9 +49,9 @@
 			`https://corsproxy.io/?https%3A%2F%2Fselfservice.campus-dual.de%2Froom%2Fjson%3Fuserid%3D${username.value}%26hash%3D${password.value}`
 		);
 		data.value = response;
-		
-		console.log(groupedByDay.value)
-		console.log(groupedByDay.value[today])
+
+		console.log(groupedByDay.value);
+		console.log(groupedByDay.value[today]);
 		/* console.log(groupedByDay.value)
         if (groupedByDay.value[today]) {
             page.value = Object.keys(groupedByDay.value).indexOf(today) + 1;
