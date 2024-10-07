@@ -17,6 +17,8 @@
 </template>
 
 <script setup>
+	const router = useRouter();
+
 	const username = useCookie("username");
 	const password = useCookie("password");
 
@@ -57,5 +59,6 @@
 	function logout() {
 		username.value = "";
 		password.value = "";
+		router.push("/login");
 	}
 </script>
