@@ -1,5 +1,7 @@
 # WebApp für den CampusDual Stundenplan
 
+> https://campusdual.nya.care/
+
 Eine simple WebApp, für den Stundenplan von CampusDual.
 Mit einem Design, dass auf Mobile auch tatsächlich nutzbar ist.
 
