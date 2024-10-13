@@ -1,75 +1,10 @@
-# Nuxt 3 Minimal Starter
+# WebApp für den CampusDual Stundenplan
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+> https://campusdual.nya.care/
 
-## Setup
+Eine simple WebApp, für den Stundenplan von CampusDual.
+Mit einem Design, dass auf Mobile auch tatsächlich nutzbar ist.
 
-Make sure to install the dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Die Seite ist in NuxtJS mit TailwindCSS geschrieben.
+Anders als auf CampusDual, werden die Daten nur einmal gefetched;
+zwischen Einträgen wechseln dauert also keine Ewigkeit! 

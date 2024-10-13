@@ -7,9 +7,15 @@
 					new Date(Number(Object.keys(groupedByDay)[page - 1])).toLocaleDateString("de-DE", { weekday: "long", year: "numeric", month: "long", day: "numeric" })
 				}}
 			</p>
-			<div class="mb-4">
-				<UPagination v-model="page" :total="data.length" class="mb-4" />
-			</div>
+			<span class="mb-4 flex text-center items-center space-x-4">
+				<UPagination v-model="page" :total="data.length" />
+				<UButton 
+					:class="{ 'opacity-0': page == Object.keys(groupedByDay).indexOf(today.toString())+1 }"
+					class="py-2"
+					@click="page = Object.keys(groupedByDay).indexOf(today.toString())+1">
+					Zurück zu Heute
+				</UButton>
+			</span>
 			<UTable :rows="schedule[page - 1]" class="w-full" />
 			<button @click="logout()" class="mt-5 p-2 bg-primary text-white rounded">Anmeldedaten zurücksetzen</button>
 		</div>
