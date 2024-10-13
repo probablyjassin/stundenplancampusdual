@@ -30,7 +30,17 @@
 	const schedule = computed(() => Object.values(groupedByDay.value));
 
 	watch(groupedByDay.value, (newVal) => {
-		page.value = Object.keys(newVal).indexOf(today.toString())+1;
+		const todayIndex = Object.keys(newVal).indexOf(today.toString());
+		if (todayIndex !== -1) {
+			page.value = todayIndex + 1;
+		} else {
+			const futureDates = Object.keys(newVal).filter(date => Number(date) > today);
+			if (futureDates.length > 0) {
+				page.value = Object.keys(newVal).indexOf(futureDates[0]) + 1;
+			} else {
+				page.value = 1;
+			}
+		}
 	});
 
 	onMounted(async () => {
