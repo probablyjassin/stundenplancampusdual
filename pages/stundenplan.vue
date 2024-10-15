@@ -32,8 +32,8 @@
 	const today = new Date().setHours(0, 0, 0, 0);
 	const page = ref(1);
 
-	const groupedByDay = ref({});
-	const data = ref([]);
+	const groupedByDay = useState('groupedByDay', (() => ({})));
+	const data = useState('stundenplan', (() => []));
 	const schedule = computed(() => Object.values(groupedByDay.value));
 
 	watch(groupedByDay.value, (newVal) => {
@@ -51,6 +51,8 @@
 	});
 
 	onMounted(async () => {
+		if (data.value.length !== 0) return;
+
 		const response = await $fetch(
 			`https://corsproxy.io/?https%3A%2F%2Fselfservice.campus-dual.de%2Froom%2Fjson%3Fuserid%3D${username.value}%26hash%3D${password.value}%26t%3D${Math.floor(Date.now() / 1000)}`
 		);
