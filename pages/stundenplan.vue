@@ -36,7 +36,7 @@
 	const data = useState('stundenplan', (() => []));
 	const schedule = computed(() => Object.values(groupedByDay.value));
 
-	const hasLoaded = ref(false);
+	const hasLoaded = useState('hasLoaded', (() => false));
 
 	watch(groupedByDay.value, (newVal) => {
 		const todayIndex = Object.keys(newVal).indexOf(today.toString());
