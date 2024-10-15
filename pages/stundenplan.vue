@@ -17,7 +17,7 @@
 					Zurück zu Heute
 				</UButton>
 			</span>
-			<UTable :rows="schedule[page - 1]" class="w-full" />
+			<UTable :rows="schedule[page - 1]" class="w-full" :loading="!hasLoaded"/>
 			<button @click="logout()" class="mt-5 p-2 bg-primary text-white rounded">Anmeldedaten zurücksetzen</button>
 		</div>
 	</ClientOnly>
@@ -35,6 +35,8 @@
 	const groupedByDay = useState('groupedByDay', (() => ({})));
 	const data = useState('stundenplan', (() => []));
 	const schedule = computed(() => Object.values(groupedByDay.value));
+
+	const hasLoaded = ref(false);
 
 	watch(groupedByDay.value, (newVal) => {
 		const todayIndex = Object.keys(newVal).indexOf(today.toString());
@@ -73,6 +75,8 @@
 				Bemerkungen: item["remarks"] || "---",
 			});
 		});
+
+		hasLoaded.value = true;
 	});
 
 	function logout() {
