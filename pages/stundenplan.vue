@@ -17,7 +17,7 @@
 					Zurück zu Heute
 				</UButton>
 			</span>
-			<UTable :rows="schedule[page - 1]" class="w-full" />
+			<UTable :rows="schedule[page - 1]" class="w-full" :loading="!hasLoaded"/>
 			<button @click="logout()" class="mt-5 p-2 bg-primary text-white rounded">Anmeldedaten zurücksetzen</button>
 		</div>
 	</ClientOnly>
@@ -32,9 +32,11 @@
 	const today = new Date().setHours(0, 0, 0, 0);
 	const page = ref(1);
 
-	const groupedByDay = ref({});
-	const data = ref([]);
+	const groupedByDay = useState('groupedByDay', (() => ({})));
+	const data = useState('stundenplan', (() => []));
 	const schedule = computed(() => Object.values(groupedByDay.value));
+
+	const hasLoaded = ref(false);
 
 	watch(groupedByDay.value, (newVal) => {
 		const todayIndex = Object.keys(newVal).indexOf(today.toString());
@@ -51,6 +53,8 @@
 	});
 
 	onMounted(async () => {
+		if (data.value.length !== 0) return;
+
 		const response = await $fetch(
 			`https://corsproxy.io/?https%3A%2F%2Fselfservice.campus-dual.de%2Froom%2Fjson%3Fuserid%3D${username.value}%26hash%3D${password.value}%26t%3D${Math.floor(Date.now() / 1000)}`
 		);
@@ -71,6 +75,8 @@
 				Bemerkungen: item["remarks"] || "---",
 			});
 		});
+
+		hasLoaded.value = true;
 	});
 
 	function logout() {
