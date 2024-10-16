@@ -2,7 +2,7 @@
 	<ClientOnly>
 		<div class="container mx-auto p-4">
 			<p class="text-3xl font-bold mb-4">Stundenplan</p>
-			<p class="text-lg mb-4">
+			<p class="text-lg mb-4" v-show="data.length">
 				{{
 					new Date(Number(Object.keys(groupedByDay)[page - 1])).toLocaleDateString("de-DE", { weekday: "long", year: "numeric", month: "long", day: "numeric" })
 				}}
@@ -17,7 +17,7 @@
 					Zurück zu Heute
 				</UButton>
 			</span>
-			<UTable :rows="schedule[page - 1]" class="w-full" :loading="!hasLoaded"/>
+			<UTable :rows="schedule[page - 1]" class="w-full" :loading="!hasLoaded" :loading-state="{ label: 'Laden...' }" />
 			<button @click="logout()" class="mt-5 p-2 bg-primary text-white rounded">Anmeldedaten zurücksetzen</button>
 		</div>
 	</ClientOnly>
