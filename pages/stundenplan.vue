@@ -2,7 +2,7 @@
 	<ClientOnly>
 		<div class="container mx-auto p-4">
 			<p class="text-3xl font-bold mb-4">Stundenplan</p>
-			<p class="text-lg mb-4">
+			<p class="text-lg mb-4" v-show="data.length">
 				{{
 					new Date(Number(Object.keys(groupedByDay)[page - 1])).toLocaleDateString("de-DE", { weekday: "long", year: "numeric", month: "long", day: "numeric" })
 				}}
