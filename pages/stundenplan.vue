@@ -17,7 +17,7 @@
 					Zurück zu Heute
 				</UButton>
 			</span>
-			<UTable :rows="schedule[page - 1]" class="w-full" :loading="!hasLoaded"/>
+			<UTable :rows="schedule[page - 1]" class="w-full" :loading="!hasLoaded" :loading-state="{ label: 'Laden...' }" />
 			<button @click="logout()" class="mt-5 p-2 bg-primary text-white rounded">Anmeldedaten zurücksetzen</button>
 		</div>
 	</ClientOnly>
