@@ -20,6 +20,7 @@
 			<UTable :rows="schedule[page - 1]" class="w-full" :loading="!hasLoaded" :loading-state="{ label: 'Laden...' }" />
 			<button @click="logout()" class="mt-5 p-2 bg-primary text-white rounded">Anmeldedaten zurücksetzen</button>
 		</div>
+		{{ data }}
 	</ClientOnly>
 </template>
 
@@ -56,12 +57,13 @@
 		if (data.value.length !== 0) return;
 
 		const response = await $fetch(
-			`https://corsproxy.io/?https%3A%2F%2Fselfservice.campus-dual.de%2Froom%2Fjson%3Fuserid%3D${username.value}%26hash%3D${password.value}%26t%3D${Math.floor(Date.now() / 1000)}`
+			`https://corsproxy.io/?https%3A%2F%2Fselfservice.campus-dual.de%2Froom%2Fjson%3Fuserid%3D${username.value}%26hash%3D${password.value}%26t%3D${Math.floor(Date.now() / 1000)}%26_%3D${Date.now()}`
 		);
 		data.value = response;
 
 		data.value.forEach((item) => {
 			const day = new Date(item["start"] * 1000).setHours(0, 0, 0, 0);
+			console.log(day.toString());
 
 			if (!groupedByDay.value[day]) {
 				groupedByDay.value[day] = [];
@@ -75,6 +77,7 @@
 				Bemerkungen: item["remarks"] || "---",
 			});
 		});
+		console.log(Object.keys(groupedByDay.value));
 
 		hasLoaded.value = true;
 	});
