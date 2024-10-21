@@ -62,7 +62,6 @@
 
 		data.value.forEach((item) => {
 			const day = new Date(item["start"] * 1000).setHours(0, 0, 0, 0);
-			console.log(day.toString());
 
 			if (!groupedByDay.value[day]) {
 				groupedByDay.value[day] = [];
