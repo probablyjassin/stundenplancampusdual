@@ -20,7 +20,6 @@
 			<UTable :rows="schedule[page - 1]" class="w-full" :loading="!hasLoaded" :loading-state="{ label: 'Laden...' }" />
 			<button @click="logout()" class="mt-5 p-2 bg-primary text-white rounded">Anmeldedaten zurücksetzen</button>
 		</div>
-		{{ data }}
 	</ClientOnly>
 </template>
 
@@ -77,7 +76,11 @@
 				Bemerkungen: item["remarks"] || "---",
 			});
 		});
-		console.log(Object.keys(groupedByDay.value));
+		for (const key in groupedByDay.value) {
+			if (Number(key) < new Date().setHours(0, 0, 0, 0) - 86400000) {
+				delete groupedByDay.value[key];
+			}
+		}
 
 		hasLoaded.value = true;
 	});
