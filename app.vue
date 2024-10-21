@@ -6,6 +6,11 @@
 </template>
 
 <script setup>
+	definePageMeta({
+		title: "Stundenplan",
+		description: "Einfache, mobile-first WebApp für den CampusDual-Stundenplan. Support für Firefox und Chromium.",
+	});
+
 	const links = [
 		{
 			label: "Home",
