@@ -54,7 +54,7 @@ const password = useCookie("password");
 const isLoggedIn = useState("isLoggedIn", (() => false))
 
 const today = new Date().setHours(0, 0, 0, 0);
-const page = ref(1);
+const page = useState("page", (() => 1));
 
 const data = useState('stundenplan', (() => []));
 
@@ -88,7 +88,7 @@ watch(data, (newVal) => {
 	}
 });
 
-watch(groupedByDay.value, (newVal) => {
+watch(groupedByDay, (newVal) => {
 	const todayIndex = Object.keys(newVal).indexOf(today.toString());
 	if (todayIndex !== -1) {
 		page.value = todayIndex + 1;
