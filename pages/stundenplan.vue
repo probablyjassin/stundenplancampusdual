@@ -11,7 +11,7 @@
 			}}
 		</p>
 
-		<span v-if="!data.length" class="space-y-3">
+		<span v-if="!isMounted" class="space-y-3">
 			<USkeleton class="mb-4 h-8 w-80" :ui="{ rounded: 'rounded-xl' }" />
 			<USkeleton class="mb-4 h-8 w-80" :ui="{ rounded: 'rounded-xl' }" />
 			<USkeleton class="mb-4 h-64 w-full" :ui="{ rounded: 'rounded-xl' }" />
@@ -52,6 +52,7 @@ const localData = ref([]);
 const username = useCookie("username");
 const password = useCookie("password");
 const isLoggedIn = useState("isLoggedIn", (() => false))
+const isMounted = ref(false);
 
 const today = new Date().setHours(0, 0, 0, 0);
 const page = useState("page", (() => 1));
@@ -103,6 +104,7 @@ watch(groupedByDay, (newVal) => {
 });
 
 onMounted(async () => {
+	isMounted.value = true;
 	if (data.value.length !== 0) return;
 
 	const storedValue = localStorage.getItem('stundenplan');
