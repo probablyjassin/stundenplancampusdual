@@ -1,15 +1,23 @@
 <template>
-	<ClientOnly>
-		<div class="container mx-auto p-4">
-			<p class="text-3xl font-bold mb-4">Stundenplan</p>
-			<p class="text-lg mb-4" v-show="data.length">
-				{{
-					new Date(Number(Object.keys(groupedByDay)[page - 1])).toLocaleDateString("de-DE", {
-						weekday: "long",
-						year: "numeric", month: "long", day: "numeric"
-					})
-				}}
-			</p>
+	<div class="container mx-auto p-4">
+
+		<p class="text-3xl font-bold mb-4">Stundenplan</p>
+		<p class="text-lg mb-4" v-show="data.length">
+			{{
+				new Date(Number(Object.keys(groupedByDay)[page - 1])).toLocaleDateString("de-DE", {
+					weekday: "long",
+					year: "numeric", month: "long", day: "numeric"
+				})
+			}}
+		</p>
+
+		<span v-if="!data.length" class="space-y-3">
+			<USkeleton class="mb-4 h-8 w-80" :ui="{ rounded: 'rounded-xl' }" />
+			<USkeleton class="mb-4 h-8 w-80" :ui="{ rounded: 'rounded-xl' }" />
+			<USkeleton class="mb-4 h-64 w-full" :ui="{ rounded: 'rounded-xl' }" />
+		</span>
+		<ClientOnly v-else>
+
 			<span class="mb-4 flex text-center items-center space-x-4">
 				<UPagination v-model="page" :total="data.length" />
 				<UButton v-if="Object.keys(groupedByDay).indexOf(today.toString()) !== -1"
@@ -18,21 +26,32 @@
 					Zurück zu Heute
 				</UButton>
 			</span>
-			<UTable :rows="schedule[page - 1]" class="w-full" :loading="!hasLoaded"
-				:loading-state="{ label: 'Laden...' }" />
-			<button @click="logout()" class="mt-5 p-2 bg-primary text-white rounded">Anmeldedaten zurücksetzen</button>
-		</div>
-	</ClientOnly>
+
+			<UTable :rows="schedule[page - 1]" :loading="!hasLoaded" :loading-state="{ label: 'Laden...' }"
+				class="w-full" />
+
+		</ClientOnly>
+
+		<button @click="logout()" class="mt-5 p-2 bg-primary text-white rounded">
+			Anmeldedaten zurücksetzen
+		</button>
+
+	</div>
 </template>
 
 <script setup>
-
-const localData = ref([]);
+definePageMeta({
+	keepalive: true,
+	key: route => route.fullPath,
+})
 
 const router = useRouter();
 
+const localData = ref([]);
+
 const username = useCookie("username");
 const password = useCookie("password");
+const isLoggedIn = useState("isLoggedIn", (() => false))
 
 const today = new Date().setHours(0, 0, 0, 0);
 const page = ref(1);
@@ -89,7 +108,6 @@ onMounted(async () => {
 	const storedValue = localStorage.getItem('stundenplan');
 	localData.value = storedValue ? JSON.parse(storedValue) : []
 
-	console.log(localData.value.length);
 	if (localData.value.length !== 0) {
 		data.value = localData.value;
 	}
@@ -115,6 +133,7 @@ onMounted(async () => {
 function logout() {
 	username.value = "";
 	password.value = "";
+	isLoggedIn.value = false;
 	router.push("/login");
 }
 </script>

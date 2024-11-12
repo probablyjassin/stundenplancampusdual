@@ -6,26 +6,30 @@
 </template>
 
 <script setup>
-	definePageMeta({
-		title: "Stundenplan",
-		description: "Einfache, mobile-first WebApp für den CampusDual-Stundenplan. Support für Firefox und Chromium.",
-	});
+const links = [
+	{
+		label: "Home",
+		icon: "i-heroicons-home",
+		to: "/",
+	},
+	{
+		label: "Stundenplan",
+		icon: "i-heroicons-clock",
+		to: "/stundenplan",
+	},
+	{
+		label: "Wie finde ich mein Passwort (Hash)?",
+		icon: "i-heroicons-document-text",
+		to: "/hash",
+	},
+];
 
-	const links = [
-		{
-			label: "Home",
-			icon: "i-heroicons-home",
-			to: "/",
-		},
-		{
-			label: "Stundenplan",
-			icon: "i-heroicons-clock",
-			to: "/stundenplan",
-		},
-		{
-			label: "Wie finde ich mein Passwort (Hash)?",
-			icon: "i-heroicons-document-text",
-			to: "/hash",
-		},
-	];
+const username = useCookie("username")
+const password = useCookie("password")
+const isLoggedIn = useState("isLoggedIn", (() => false))
+
+const test_url = `https://corsproxy.io/?https%3A%2F%2Fselfservice.campus-dual.de%2Fdash%2Fgetcp%3Fuser%3D${username.value}%26hash%3D${password.value}`
+const response = await $fetch(test_url)
+
+isLoggedIn.value = !!(response == 0)
 </script>
