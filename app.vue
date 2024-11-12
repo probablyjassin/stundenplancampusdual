@@ -37,8 +37,13 @@ const username = useCookie("username")
 const password = useCookie("password")
 const isLoggedIn = useState("isLoggedIn", (() => false))
 
-const test_url = `https://corsproxy.io/?https%3A%2F%2Fselfservice.campus-dual.de%2Fdash%2Fgetcp%3Fuser%3D${username.value}%26hash%3D${password.value}`
-const response = await $fetch(test_url)
-
-isLoggedIn.value = !!(response == 0)
+onMounted(async () => {
+	try {
+		const test_url = `https://corsproxy.io/?https%3A%2F%2Fselfservice.campus-dual.de%2Fdash%2Fgetcp%3Fuser%3D${username.value}%26hash%3D${password.value}`
+		const response = await $fetch(test_url)
+		isLoggedIn.value = !!(response == 0)
+	} catch (error) {
+		isLoggedIn.value = false
+	}
+})
 </script>
