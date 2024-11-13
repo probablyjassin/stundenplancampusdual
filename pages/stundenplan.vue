@@ -14,7 +14,7 @@
 		<span v-if="!isMounted" class="space-y-3">
 			<USkeleton class="mb-4 h-8 w-80" :ui="{ rounded: 'rounded-xl' }" />
 			<USkeleton class="mb-4 h-8 w-80" :ui="{ rounded: 'rounded-xl' }" />
-			<USkeleton class="mb-4 h-64 w-full" :ui="{ rounded: 'rounded-xl' }" />
+			<USkeleton class="mb-4 h-80 w-full" :ui="{ rounded: 'rounded-xl' }" />
 		</span>
 		<ClientOnly v-else>
 
