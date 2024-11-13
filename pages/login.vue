@@ -56,7 +56,7 @@ async function login() {
 	if (response == 0) {
 		usernameCookie.value = username.value;
 		passwordCookie.value = password.value;
-		return router.push("/dash");
+		return router.push("/dash/stundenplan");
 	}
 	error.value = true;
 	isLoading.value = false;
