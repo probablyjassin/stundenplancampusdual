@@ -13,11 +13,9 @@
             </p>
             <span>
                 <p>Zum Github-Repo:</p>
-                <a class="text-accent underline" href="https://github.com/probablyjassin/studenplancampusdual">probablyjassin/stundenplancampusdual</a>
+                <a class="text-accent underline"
+                    href="https://github.com/probablyjassin/studenplancampusdual">probablyjassin/stundenplancampusdual</a>
             </span>
         </div>
     </div>
 </template>
-
-<script setup>
-</script>

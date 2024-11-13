@@ -32,18 +32,15 @@
 
 		</ClientOnly>
 
-		<button @click="logout()" class="mt-5 p-2 bg-primary text-white rounded">
-			Anmeldedaten zurücksetzen
-		</button>
-
 	</div>
 </template>
 
 <script setup>
 definePageMeta({
+	layout: 'dash',
 	keepalive: true,
 	key: route => route.fullPath,
-})
+});
 
 const router = useRouter();
 
@@ -131,11 +128,4 @@ onMounted(async () => {
 
 	hasLoaded.value = true;
 });
-
-function logout() {
-	username.value = "";
-	password.value = "";
-	isLoggedIn.value = false;
-	router.push("/login");
-}
 </script>

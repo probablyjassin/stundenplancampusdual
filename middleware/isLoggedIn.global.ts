@@ -1,11 +1,19 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
 	if (import.meta.server) return true
-	if (to.fullPath !== "/stundenplan") {
+
+	const isLoggedIn = useState("isLoggedIn", (() => false) as () => boolean)
+
+	if (["/", "/hash", "/login"].includes(to.fullPath)) {
+		if (isLoggedIn.value) {
+			return navigateTo("/dash")
+		}
+	}
+
+	if (!to.fullPath.includes("dash")) {
 		return true
 	}
 	const username = useCookie("username")
 	const password = useCookie("password")
-	const isLoggedIn = useState("isLoggedIn", (() => false) as () => boolean)
 
 	if (!isLoggedIn.value) {
 		try {
