@@ -3,12 +3,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
 	const isLoggedIn = useState("isLoggedIn", (() => false) as () => boolean)
 
-	if (["/", "/hash", "/login"].includes(to.fullPath)) {
-		if (isLoggedIn.value) {
-			return navigateTo("/dash")
-		}
-	}
-
 	if (!to.fullPath.includes("dash")) {
 		return true
 	}
