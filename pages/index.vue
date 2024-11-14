@@ -15,11 +15,18 @@
 				<p>Zum Github-Repo:</p>
 				<a class="text-accent underline" href="https://github.com/probablyjassin/studenplancampusdual">probablyjassin/stundenplancampusdual</a>
 			</span>
-			<UButton v-if="isLoggedIn" to="/dash/stundenplan" block class="w-1/3">Zum Stundenplan</UButton>
+			<USkeleton v-if="!isMounted" class="h-8 w-1/3"></USkeleton>
+			<UButton v-else-if="isMounted && isLoggedIn" to="/dash/stundenplan" block class="w-1/3">Zum Stundenplan</UButton>
+			<UButton v-else to="/login" block class="w-1/3">Anmelden</UButton>
 		</div>
 	</div>
 </template>
 
 <script setup>
 	const isLoggedIn = useState("isLoggedIn", (() => false))
+	const isMounted = ref(false)
+
+	onMounted(() => {
+		isMounted.value = true
+	})
 </script>
