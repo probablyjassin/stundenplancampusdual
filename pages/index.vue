@@ -15,6 +15,11 @@
 				<p>Zum Github-Repo:</p>
 				<a class="text-accent underline" href="https://github.com/probablyjassin/studenplancampusdual">probablyjassin/stundenplancampusdual</a>
 			</span>
+			<UButton v-if="isLoggedIn" to="/dash/stundenplan" block class="w-1/3">Zum Stundenplan</UButton>
 		</div>
 	</div>
 </template>
+
+<script setup>
+	const isLoggedIn = useState("isLoggedIn", (() => false))
+</script>
