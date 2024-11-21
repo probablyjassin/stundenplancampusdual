@@ -1,5 +1,9 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
+	if (to.fullPath == "/stundenplan") {
+		return navigateTo("/dash/stundenplan")
+	}
 	if (import.meta.server) return true
+
 
 	const isLoggedIn = useState("isLoggedIn", (() => false) as () => boolean)
 
