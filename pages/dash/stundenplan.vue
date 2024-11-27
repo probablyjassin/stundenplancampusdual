@@ -121,8 +121,21 @@ onMounted(async () => {
 
 	const response = await getCampusData('room');
 
-	data.value = response;
-	localData.value = data.value;
+	function arraysEqual(a, b) {
+		if (a === b) return true;
+		if (a == null || b == null) return false;
+		if (a.length !== b.length) return false;
+
+		for (var i = 0; i < a.length; ++i) {
+			if (JSON.stringify(a[i]) !== JSON.stringify(b[i])) return false;
+		}
+		return true;
+	}
+
+	if (!arraysEqual(JSON.parse(JSON.stringify(localData.value)), response)) {
+		data.value = response;
+		localData.value = data.value;
+	}
 
 	hasLoaded.value = true;
 });
