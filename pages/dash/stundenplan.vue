@@ -42,6 +42,8 @@ definePageMeta({
 	key: route => route.fullPath,
 });
 
+const { getCampusData } = useCampus()
+
 const router = useRouter();
 
 const localData = ref([]);
@@ -117,14 +119,23 @@ onMounted(async () => {
 		localStorage.setItem('stundenplan', JSON.stringify(newValue));
 	}, { deep: true });
 
+	const response = await getCampusData('room');
 
+	function arraysEqual(a, b) {
+		if (a === b) return true;
+		if (a == null || b == null) return false;
+		if (a.length !== b.length) return false;
 
-	const response = await $fetch(
-		`https://corsproxy.io/?https%3A%2F%2Fselfservice.campus-dual.de%2Froom%2Fjson%3Fuserid%3D${username.value}%26hash%3D${password.value}%26t%3D${Math.floor(Date.now() / 1000)}%26_%3D${Date.now()}`
-	);
+		for (var i = 0; i < a.length; ++i) {
+			if (JSON.stringify(a[i]) !== JSON.stringify(b[i])) return false;
+		}
+		return true;
+	}
 
-	data.value = response;
-	localData.value = data.value;
+	if (!arraysEqual(JSON.parse(JSON.stringify(localData.value)), response)) {
+		data.value = response;
+		localData.value = data.value;
+	}
 
 	hasLoaded.value = true;
 });
