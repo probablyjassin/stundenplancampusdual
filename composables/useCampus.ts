@@ -1,43 +1,41 @@
-import { ref } from 'vue';
+import { ref } from "vue";
 
-const baseCampusURL = "https://selfservice.campus-dual.de"
-const baseCorsUrl = "https://corsproxy.io/?"
+const baseCampusURL = "https://selfservice.campus-dual.de";
+const baseCorsUrl = "https://corsproxy.io/?";
 
 export function useCampus() {
-    const username = useCookie("username");
-    const password = useCookie("password");
+	const username = useCookie("username");
+	const password = useCookie("password");
 
-    async function getCampusData(type: 'room' | 'timeline' | 'credits' | 'semester') {
+	async function getCampusData(type: "room" | "timeline" | "credits" | "semester") {
+		const UrlParams = `?userid=${username.value}&hash=${password.value}&t=${Math.floor(Date.now() / 1000)}&_=${Date.now()}`;
 
-        const UrlParams = `?userid=${username.value}&hash=${password.value}&t=${Math.floor(Date.now() / 1000)}&_=${Date.now()}`
+		switch (type) {
+			case "room":
+				var urlPath = "/room/json";
+				break;
+			case "timeline":
+				var urlPath = "/dash/gettimeline";
+				break;
+			case "credits":
+				var urlPath = "/dash/getcp";
+				break;
+			case "semester":
+				var urlPath = "/dash/getfs";
+				break;
 
-        switch (type) {
+			default:
+				throw new Error("Invalid type");
+		}
 
-            case 'room':
-                var urlPath = "/room/json"
-                break;
-            case 'timeline':
-                var urlPath = "/dash/gettimeline"
-                break;
-            case 'credits':
-                var urlPath = "/dash/getcp"
-                break;
-            case 'semester':
-                var urlPath = "/dash/getfs"
-                break;
+		const url = baseCorsUrl + encodeURIComponent(baseCampusURL + urlPath + UrlParams);
 
-            default:
-                throw new Error('Invalid type');
-        }
+		return await $fetch(url);
+	}
 
-        const url = baseCorsUrl + encodeURIComponent(baseCampusURL + urlPath + UrlParams)
-
-        return await $fetch(url);
-    }
-
-    return {
-        username,
-        password,
-        getCampusData
-    };
+	return {
+		username,
+		password,
+		getCampusData,
+	};
 }

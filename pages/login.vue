@@ -8,16 +8,27 @@
 		</div>
 	</div>
 	<div class="flex flex-col space-y-5 max-w-md p-4">
-		<input type="text" name="username" id="username" placeholder="Username" v-model="username"
-			:class="{ 'border-red-500': !usernameValid }" class="p-2 border rounded" />
+		<input
+			type="text"
+			name="username"
+			id="username"
+			placeholder="Username"
+			v-model="username"
+			:class="{ 'border-red-500': !usernameValid }"
+			class="p-2 border rounded" />
 		<p v-if="!usernameValid" class="text-red-500 text-sm">Bitte geben Sie einen Benutzernamen ein.</p>
 
-		<input type="password" name="Hash" id="hash" placeholder="Passwort (Hash)" v-model="password"
-			:class="{ 'border-red-500': !passwordValid }" class="p-2 border rounded" />
+		<input
+			type="password"
+			name="Hash"
+			id="hash"
+			placeholder="Passwort (Hash)"
+			v-model="password"
+			:class="{ 'border-red-500': !passwordValid }"
+			class="p-2 border rounded" />
 		<p v-if="!passwordValid" class="text-red-500 text-sm">Bitte geben Sie ein Passwort ein.</p>
 
-		<UButton @click="login" :loading="isLoading && !error" class="p-3 bg-primary text-text rounded block">Login
-		</UButton>
+		<UButton @click="login" :loading="isLoading && !error" class="p-3 bg-primary text-text rounded block">Login </UButton>
 
 		<p v-if="error" class="text-red-500 text-sm">
 			Der Login ist fehlgeschlagen. Überprüfe ob du tatsächlich deinen aktuellen Hash von der CampusDual API hast.
@@ -26,48 +37,54 @@
 </template>
 
 <script setup>
-const router = useRouter();
+	const { getCampusData } = useCampus();
+	const router = useRouter();
+	const route = useRoute();
 
-const username = ref("");
-const password = ref("");
-const usernameValid = ref(true);
-const passwordValid = ref(true);
+	const username = ref("");
+	const password = ref("");
+	const usernameValid = ref(true);
+	const passwordValid = ref(true);
 
-const isLoading = ref(false);
-const error = ref(false);
+	const isLoading = ref(false);
+	const error = ref(false);
 
-const usernameCookie = useCookie("username", { expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000) });
-const passwordCookie = useCookie("password", { expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000) });
+	const usernameCookie = useCookie("username", { expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000) });
+	const passwordCookie = useCookie("password", { expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000) });
 
-async function login() {
-	isLoading.value = true;
+	async function login() {
+		isLoading.value = true;
 
-	usernameValid.value = username.value !== "";
-	passwordValid.value = password.value !== "";
+		usernameValid.value = username.value !== "";
+		passwordValid.value = password.value !== "";
 
-	if (!usernameValid.value || !passwordValid.value) {
-		return;
-	}
+		if (!usernameValid.value || !passwordValid.value) {
+			return;
+		}
 
-	const test_url = `https://corsproxy.io/?https%3A%2F%2Fselfservice.campus-dual.de%2Fdash%2Fgetcp%3Fuser%3D${username.value}%26hash%3D${password.value}`;
-	const response = await $fetch(test_url);
-
-	if (typeof response === 'number') {
 		usernameCookie.value = username.value;
 		passwordCookie.value = password.value;
-		return router.push("/dash/stundenplan");
+
+		const response = await getCampusData("timeline");
+		console.log(response);
+
+		if (typeof response != "string") {
+			router.push({ path: "/dash/stundenplan" });
+			return;
+		}
+		error.value = true;
+		isLoading.value = false;
+		usernameCookie.value = null;
+		passwordCookie.value = null;
 	}
-	error.value = true;
-	isLoading.value = false;
-}
 </script>
 
 <style scoped>
-.border-red-500 {
-	border-color: #f56565;
-}
+	.border-red-500 {
+		border-color: #f56565;
+	}
 
-.text-red-500 {
-	color: #f56565;
-}
+	.text-red-500 {
+		color: #f56565;
+	}
 </style>
