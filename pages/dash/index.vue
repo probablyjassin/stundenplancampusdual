@@ -1,16 +1,27 @@
 <template>
-    <div>
-        <span class="flex">
-            <p>Hi! Der Stundenplan ist hier drüben</p>
-            <UIcon name="i-heroicons-arrow-up-left" />
-        </span>
-        <p>Hier kommen vielleicht noch andere Infos hin, sofern campusdual es supported.</p>
-        <!-- https://selfservice.campus-dual.de/dash/getexamstats?user=5002669&hash=11fd3cf6e9aaa96ee227e969abb03d06 -->
+    <div class="mx-auto p-4">
+        <h1 class="text-3xl">
+            Semester: <b>{{ semester }}</b>
+        </h1>
+        <p>
+            <b>{{ credits }}</b> Credit-Points
+        </p>
+        <br>
+        <p>Prüfungen: (WIP)</p>
+        <p>
+            {{ exams }}
+        </p>
     </div>
 </template>
 
 <script setup>
-definePageMeta({
-    layout: 'dash'
-});
+    definePageMeta({
+        layout: 'dash'
+    });
+
+    const { getCampusData } = useCampus()
+
+    const semester = ref(await getCampusData("semester"))
+    const credits = ref(await getCampusData("credits"))
+    const exams = ref(await getCampusData("exams"))
 </script>
