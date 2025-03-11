@@ -7,8 +7,7 @@ export function useCampus() {
 	const username = useCookie("username");
 	const password = useCookie("password");
 
-	async function getCampusData(type: "room" | "timeline" | "credits" | "semester" |  "exams") {
-
+	async function getCampusData(type: "room" | "timeline" | "credits" | "semester" | "exams") {
 		switch (type) {
 			case "room":
 				var urlPath = "/room/json"; // userid
@@ -23,17 +22,17 @@ export function useCampus() {
 				var urlPath = "/dash/getfs"; // user
 				break;
 			case "exams":
-				var urlPath = "/dash/getexamstats" // user
+				var urlPath = "/dash/getexamstats"; // user
 				break;
 
 			default:
 				throw new Error("Invalid type");
 		}
-
-		const UrlParams = `?${type == 'room' ? 'userid' : 'user'}=${username.value}&hash=${password.value}&t=${Math.floor(Date.now() / 1000)}&_=${Date.now()}`;
+		console.log("Getting data for", type);
+		const UrlParams = `?${type == "room" ? "userid" : "user"}=${username.value}&hash=${password.value}&t=${Math.floor(Date.now() / 1000)}&_=${Date.now()}`;
+		console.log("URL Params", UrlParams);
 
 		const url = baseCorsUrl + encodeURIComponent(baseCampusURL + urlPath + UrlParams);
-		console.log(baseCampusURL + urlPath + UrlParams)
 		return await $fetch(url);
 	}
 
