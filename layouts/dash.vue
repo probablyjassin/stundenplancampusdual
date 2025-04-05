@@ -8,19 +8,19 @@
 
 	const items = ref<NavigationMenuItem[]>([
 		{
-			label: "Home",
+			label: "Dashboard",
 			icon: "i-heroicons-home",
-			to: "/",
+			to: "/dash",
 		},
 		{
-			label: "Wie finde ich mein Passwort (Hash)?",
-			icon: "i-heroicons-document-text",
-			to: "/hash",
+			label: "Stundenplan",
+			icon: "i-heroicons-clock",
+			to: "/dash/stundenplan",
 		},
 		{
-			label: "Login",
-			icon: "i-heroicons-finger-print",
-			to: "/login",
+			label: "Logout",
+			icon: "i-heroicons-arrow-turn-down-left",
+			to: "/logout",
 		},
 	]);
 </script>
