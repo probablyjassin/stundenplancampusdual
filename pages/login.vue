@@ -16,7 +16,7 @@
 			v-model="username"
 			:class="{ 'border-red-500': !usernameValid }"
 			class="p-2 border rounded" />
-		<p v-if="!usernameValid" class="text-red-500 text-sm">Bitte geben Sie einen Benutzernamen ein.</p>
+		<p v-if="!usernameValid" class="text-red-500 text-sm">Bitte geben Sie einen gültigen Benutzernamen ein.</p>
 
 		<input
 			type="password"
@@ -53,29 +53,31 @@
 	const passwordCookie = useCookie("password", { expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000) });
 
 	async function login() {
-		isLoading.value = true;
+		if (validateInputs()) {
+			isLoading.value = true;
+	
+			usernameCookie.value = username.value;
+			passwordCookie.value = password.value;
+	
+			const response = await getCampusData("timeline");
+			console.log(response);
+	
+			if (typeof response != "string") {
+				router.push({ path: "/dash/stundenplan" });
+				return;
+			}
+			error.value = true;
+			isLoading.value = false;
+			usernameCookie.value = null;
+			passwordCookie.value = null;
+		}
+	}
 
-		usernameValid.value = username.value !== "";
+	function validateInputs() {
+		usernameValid.value = /^\d{7}$/.test(username.value);
 		passwordValid.value = password.value !== "";
 
-		if (!usernameValid.value || !passwordValid.value) {
-			return;
-		}
-
-		usernameCookie.value = username.value;
-		passwordCookie.value = password.value;
-
-		const response = await getCampusData("timeline");
-		console.log(response);
-
-		if (typeof response != "string") {
-			router.push({ path: "/dash/stundenplan" });
-			return;
-		}
-		error.value = true;
-		isLoading.value = false;
-		usernameCookie.value = null;
-		passwordCookie.value = null;
+		return usernameValid.value && passwordValid.value;
 	}
 </script>
 
