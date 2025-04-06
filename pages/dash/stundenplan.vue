@@ -29,7 +29,8 @@
 				</UButton>
 			</span>
 
-			<UTable :rows="schedule[page - 1]" :loading="!hasLoaded" :loading-state="{ label: 'Laden...' }" class="w-full" />
+			<UTable :data="groupedByDay" :loading="!hasLoaded" :loading-state="{ label: 'Laden...' }" class="w-full" />
+			{{ groupedByDay }}
 		</ClientOnly>
 	</div>
 </template>
