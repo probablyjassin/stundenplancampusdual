@@ -38,7 +38,9 @@ const timeSlots = [
     { start: '08:00', end: '09:30' },
     { start: '10:00', end: '11:30' },
     { start: '12:00', end: '13:30' },
-    { start: '14:00', end: '15:30' }
+    { start: '14:00', end: '15:30' },
+    { start: '15:45', end: '17:15' },
+
 ];
 
 const getLessonForTimeAndDay = (startTime, dayIndex) => {
