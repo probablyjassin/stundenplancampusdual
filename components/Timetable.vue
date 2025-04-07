@@ -38,6 +38,17 @@
                         </div>
                     </td>
                 </tr>
+                <!-- Add new row for dummy cells -->
+                <tr>
+                    <td class="sticky left-0 z-10 bg-secondary-100 dark:bg-primary-950 px-6 py-4">Mensa:</td>
+                    <td v-for="(day, index) in weekDays" :key="day"
+                        class="px-3 py-2 border-b border-secondary-200 dark:border-secondary-800 align-top">
+                        <div v-if="hasLessonsForDay(index)"
+                            class="h-16 rounded-lg bg-secondary-200 dark:bg-secondary-800 p-3 opacity-25 flex items-center justify-center text-secondary-600 dark:text-secondary-400">
+                            <!-- {{useAsyncData(() => getMeals(getFormattedDate(index)))}} -->
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -50,6 +61,9 @@ const props = defineProps({
         required: true
     }
 });
+
+const { getMeals } = useMensa()
+
 
 const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 const timeSlots = [
@@ -81,6 +95,29 @@ const isSameDay = (timestamp1, timestamp2) => {
     const date1 = new Date(timestamp1 * 1000);
     const date2 = new Date(timestamp2 * 1000);
     return date1.toDateString() === date2.toDateString();
+};
+
+// Add new function to check if a day has any lessons
+const hasLessonsForDay = (dayIndex) => {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    date.setDate(date.getDate() - date.getDay() + 1);
+    date.setDate(date.getDate() + dayIndex);
+    const timestamp = Math.floor(date.getTime() / 1000);
+
+    return props.lessons.some(lesson => isSameDay(lesson.timestamp, timestamp));
+};
+
+// Add to script setup section
+const getFormattedDate = (dayIndex) => {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    // Set to Monday of current week
+    date.setDate(date.getDate() - date.getDay() + 1);
+    // Add days to get to desired weekday
+    date.setDate(date.getDate() + dayIndex);
+
+    return date.toISOString().split('T')[0]; // Returns YYYY-MM-DD format
 };
 </script>
 

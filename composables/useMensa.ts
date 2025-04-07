@@ -1,15 +1,14 @@
-export function useMensa() {
+export function useMensa(day: string) {
     function getMeals(day: string) {
-        const url = `https://openmensa.org/api/v2/canteens/69/days/${day}/meals`;
-        const { data, error } = useFetch<Meal[]>(url, {
+        return fetch(`https://openmensa.org/api/v2/canteens/69/days/${day}/meals`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
             },
-        });
-        return { data, error };
+        })
     }
     return {
         getMeals,
     }
 }
+
