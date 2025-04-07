@@ -22,3 +22,16 @@ export interface CampusDataSimple {
 	instructor: string;
 	room: string;
 }
+
+export interface Meal {
+	id: number;
+	name: string;
+	category: string;
+	prices: {
+		students: number;
+		employees: number;
+		pupils: number | null;
+		others: number;
+	};
+	notes: string[];
+}
