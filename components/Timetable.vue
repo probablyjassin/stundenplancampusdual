@@ -1,22 +1,39 @@
 <template>
-    <div class="w-full h-full ">
-        <table>
+    <div class="w-full h-full p-4 overflow-x-auto">
+        <!-- Change the table background to use accent colors -->
+        <table class="w-full border-separate border-spacing-0 rounded-lg bg-accent-50 dark:bg-accent-950">
             <thead>
                 <tr>
-                    <th>Time</th>
-                    <th v-for="day in weekDays" :key="day">{{ day }}</th>
+                    <th
+                        class="sticky left-0 z-20 bg-accent-100/50 dark:bg-accent-900/50 px-6 py-4 text-left text-sm font-semibold text-secondary-900 dark:text-secondary-100 border-b border-secondary-200 dark:border-secondary-800">
+                        Time
+                    </th>
+                    <th v-for="day in weekDays" :key="day"
+                        class="px-6 py-4 text-left text-sm font-semibold text-secondary-900 dark:text-secondary-100 border-b border-secondary-200 dark:border-secondary-800 bg-accent-100/50 dark:bg-accent-900/50">
+                        {{ day }}
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="timeSlot in timeSlots" :key="timeSlot.start">
-                    <td class="time-cell">{{ timeSlot.start }} - {{ timeSlot.end }}</td>
-                    <td v-for="(day, index) in weekDays" :key="day" class="lesson-cell">
-                        <div v-if="getLessonForTimeAndDay(timeSlot.start, index)" class="lesson">
-                            <div class="lesson-title">{{ getLessonForTimeAndDay(timeSlot.start, index).description }}
+                    <td
+                        class="sticky left-0 z-10 bg-secondary-100 dark:bg-primary-950 px-6 py-4 text-sm font-medium text-secondary-900 dark:text-secondary-100 border-b border-secondary-200 dark:border-secondary-800">
+                        {{ timeSlot.start }} - {{ timeSlot.end }}
+                    </td>
+                    <td v-for="(day, index) in weekDays" :key="day"
+                        class="px-3 py-2 border-b border-secondary-200 dark:border-secondary-800 align-top">
+                        <div v-if="getLessonForTimeAndDay(timeSlot.start, index)"
+                            class="rounded-lg bg-primary-50 dark:bg-primary-950 p-3 shadow-sm transition-all hover:shadow-md ring-1 ring-primary-100 dark:ring-primary-900">
+                            <div class="font-medium text-primary-900 dark:text-primary-100 mb-2">
+                                {{ getLessonForTimeAndDay(timeSlot.start, index).description }}
                             </div>
-                            <div class="lesson-details">
-                                <div>{{ getLessonForTimeAndDay(timeSlot.start, index).instructor }}</div>
-                                <div>{{ getLessonForTimeAndDay(timeSlot.start, index).room }}</div>
+                            <div class="space-y-1">
+                                <div class="text-sm text-primary-700 dark:text-primary-300">
+                                    {{ getLessonForTimeAndDay(timeSlot.start, index).instructor }}
+                                </div>
+                                <div class="text-sm text-primary-600 dark:text-primary-400">
+                                    {{ getLessonForTimeAndDay(timeSlot.start, index).room }}
+                                </div>
                             </div>
                         </div>
                     </td>
@@ -25,6 +42,7 @@
         </table>
     </div>
 </template>
+
 <script setup>
 const props = defineProps({
     lessons: {
@@ -67,67 +85,9 @@ const isSameDay = (timestamp1, timestamp2) => {
 </script>
 
 <style scoped>
-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 800px;
-}
-
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
     table {
-        /* Make each column take up most of the viewport width on mobile */
         min-width: 400px;
     }
-
-    .time-cell {
-        min-width: 100px;
-    }
-
-    .lesson-cell {
-        /* Make each day column wide enough to be readable */
-        min-width: 280px;
-    }
-}
-
-/* Rest of your existing styles... */
-th,
-td {
-    padding: 8px;
-}
-
-th {
-    font-weight: bold;
-}
-
-.time-cell {
-    width: 120px;
-    font-weight: bold;
-}
-
-.lesson-cell {
-    width: calc((100% - 120px) / 5);
-    height: 100px;
-    vertical-align: top;
-}
-
-.lesson {
-    border-radius: 4px;
-    padding: 8px;
-    height: 100%;
-    margin-bottom: 1.5em;
-}
-
-.lesson-title {
-    font-weight: bold;
-    margin-bottom: 4px;
-}
-
-.lesson-details {
-    font-size: 0.9em;
-    color: #666;
-}
-
-.lesson-details>div {
-    margin-bottom: 2px;
 }
 </style>
