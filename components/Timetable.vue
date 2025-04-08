@@ -1,6 +1,5 @@
 <template>
-    <div class="w-full h-full p-4 overflow-x-auto">
-        <!-- Change the table background to use accent colors -->
+    <div class="w-full h-full overflow-x-auto">
         <table class="w-full border-separate border-spacing-0 rounded-lg bg-accent-50 dark:bg-accent-950">
             <thead>
                 <tr>
