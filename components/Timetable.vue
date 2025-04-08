@@ -45,7 +45,7 @@
                         class="px-3 py-2 border-b border-secondary-200 dark:border-secondary-800 align-top">
                         <div v-if="hasLessonsForDay(index)"
                             class="h-16 rounded-lg bg-secondary-200 dark:bg-secondary-800 p-3 opacity-25 flex items-center justify-center text-secondary-600 dark:text-secondary-400">
-                            <!-- {{useAsyncData(() => getMeals(getFormattedDate(index)))}} -->
+                            {{ getMeals(getFormattedDate(index)) }}
                         </div>
                     </td>
                 </tr>
@@ -63,7 +63,6 @@ const props = defineProps({
 });
 
 const { getMeals } = useMensa()
-
 
 const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 const timeSlots = [
