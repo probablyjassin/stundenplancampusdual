@@ -8,9 +8,15 @@
                         class="sticky left-0 z-20 bg-accent-100/50 dark:bg-accent-900/50 px-6 py-4 text-left text-sm font-semibold text-secondary-900 dark:text-secondary-100 border-b border-secondary-200 dark:border-secondary-800">
                         Time
                     </th>
-                    <th v-for="day in weekDays" :key="day"
+                    <th v-for="(day, index) in weekDays" :key="day"
                         class="px-6 py-4 text-left text-sm font-semibold text-secondary-900 dark:text-secondary-100 border-b border-secondary-200 dark:border-secondary-800 bg-accent-100/50 dark:bg-accent-900/50">
                         {{ day }}
+                        <div class="text-xs text-secondary-600 dark:text-secondary-400">
+                            {{ new Date(getFormattedDate(index + 1)).toLocaleDateString('de-DE', {
+                                day: '2-digit', month:
+                                    '2-digit'
+                            }) }}
+                        </div>
                     </th>
                 </tr>
             </thead>
@@ -38,14 +44,13 @@
                         </div>
                     </td>
                 </tr>
-                <!-- Add new row for dummy cells -->
                 <tr>
                     <td class="sticky left-0 z-10 bg-secondary-100 dark:bg-primary-950 px-6 py-4">Mensa:</td>
                     <td v-for="(day, index) in weekDays" :key="day"
                         class="px-3 py-2 border-b border-secondary-200 dark:border-secondary-800 align-top">
                         <div v-if="hasLessonsForDay(index)"
                             class="h-16 rounded-lg bg-secondary-200 dark:bg-secondary-800 p-3 opacity-25 flex items-center justify-center text-secondary-600 dark:text-secondary-400">
-                            {{ getMeals(getFormattedDate(index)) }}
+                            {{ }} <!-- Mensa meal of the day should go here -->
                         </div>
                     </td>
                 </tr>
