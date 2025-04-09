@@ -30,14 +30,14 @@
                         <div v-if="getLessonForTimeAndDay(timeSlot.start, index)"
                             class="rounded-lg bg-primary-50 dark:bg-primary-950 p-3 shadow-sm transition-all hover:shadow-md ring-1 ring-primary-100 dark:ring-primary-900">
                             <div class="font-medium text-primary-900 dark:text-primary-100 mb-2">
-                                {{ getLessonForTimeAndDay(timeSlot.start, index).description }}
+                                {{ getLessonForTimeAndDay(timeSlot.start, index)?.description }}
                             </div>
                             <div class="space-y-1">
                                 <div class="text-sm text-primary-700 dark:text-primary-300">
-                                    {{ getLessonForTimeAndDay(timeSlot.start, index).instructor }}
+                                    {{ getLessonForTimeAndDay(timeSlot.start, index)?.instructor }}
                                 </div>
                                 <div class="text-sm text-primary-600 dark:text-primary-400">
-                                    {{ getLessonForTimeAndDay(timeSlot.start, index).room }}
+                                    {{ getLessonForTimeAndDay(timeSlot.start, index)?.room }}
                                 </div>
                             </div>
                         </div>
@@ -58,15 +58,20 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { CalendarDate } from "@internationalized/date";
+import type { CampusDataSimple } from "../composables/useTypes"
+
 const props = defineProps({
     lessons: {
-        type: Array,
+        type: Array as PropType<CampusDataSimple[]>,
         required: true
     }
 });
 
 const { getMeals } = useMensa()
+const { parseCalendarDate } = useCalendarDate();
+const selectedDate: Ref<CalendarDate> = useState("selected-date")
 
 const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 const timeSlots = [
@@ -78,7 +83,15 @@ const timeSlots = [
 
 ];
 
-const getLessonForTimeAndDay = (startTime, dayIndex) => {
+const timestamp: Ref<number> = computed(() => {
+    if (selectedDate.value) {
+        return parseCalendarDate(selectedDate.value).getTime() / 1000;
+    } else {
+        return Math.floor((new Date()).getTime() / 1000);
+    }
+});
+
+const getLessonForTimeAndDay = (startTime: string, dayIndex: number) => {
     const date = new Date();
     date.setHours(0, 0, 0, 0);
     // Set to Monday of current week
@@ -86,33 +99,30 @@ const getLessonForTimeAndDay = (startTime, dayIndex) => {
     // Add days to get to desired weekday
     date.setDate(date.getDate() + dayIndex);
 
-    const timestamp = Math.floor(date.getTime() / 1000);
-
-    return props.lessons.find(lesson =>
+    return props.lessons.find((lesson) =>
         lesson.start === startTime &&
-        isSameDay(lesson.timestamp, timestamp)
+        isSameDay(lesson.timestamp, timestamp.value)
     );
 };
 
-const isSameDay = (timestamp1, timestamp2) => {
+const isSameDay = (timestamp1: number, timestamp2: number) => {
     const date1 = new Date(timestamp1 * 1000);
     const date2 = new Date(timestamp2 * 1000);
     return date1.toDateString() === date2.toDateString();
 };
 
 // Add new function to check if a day has any lessons
-const hasLessonsForDay = (dayIndex) => {
+const hasLessonsForDay = (dayIndex: number) => {
     const date = new Date();
     date.setHours(0, 0, 0, 0);
     date.setDate(date.getDate() - date.getDay() + 1);
     date.setDate(date.getDate() + dayIndex);
-    const timestamp = Math.floor(date.getTime() / 1000);
 
-    return props.lessons.some(lesson => isSameDay(lesson.timestamp, timestamp));
+    return props.lessons.some(lesson => isSameDay(lesson.timestamp, timestamp.value));
 };
 
 // Add to script setup section
-const getFormattedDate = (dayIndex) => {
+const getFormattedDate = (dayIndex: number) => {
     const date = new Date();
     date.setHours(0, 0, 0, 0);
     // Set to Monday of current week
