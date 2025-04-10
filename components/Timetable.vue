@@ -92,16 +92,12 @@ const timestamp: Ref<number> = computed(() => {
 });
 
 const getLessonForTimeAndDay = (startTime: string, dayIndex: number) => {
-    const date = new Date();
-    date.setHours(0, 0, 0, 0);
-    // Set to Monday of current week
-    date.setDate(date.getDate() - date.getDay() + 1);
-    // Add days to get to desired weekday
-    date.setDate(date.getDate() + dayIndex);
+    const date = new Date(timestamp.value * 1000);
+    date.setDate(date.getDate() - date.getDay() + 1 + dayIndex); // Get to the correct weekday
 
     return props.lessons.find((lesson) =>
         lesson.start === startTime &&
-        isSameDay(lesson.timestamp, timestamp.value)
+        new Date(lesson.timestamp * 1000).getDay() === date.getDay()
     );
 };
 

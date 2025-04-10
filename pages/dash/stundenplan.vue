@@ -1,13 +1,6 @@
 <template>
 	<div class="p-4">
-		<UPopover>
-			<UButton icon="i-heroicons-calendar-days" color="neutral" variant="subtle" />
-
-			<template #content>
-				<Calendar></Calendar>
-			</template>
-		</UPopover>
-		{{ selectedDate }}
+		<Calendar></Calendar>
 		<Timetable :lessons="lessonsThisWeek" class="h-full"></Timetable>
 	</div>
 </template>
