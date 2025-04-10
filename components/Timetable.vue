@@ -71,7 +71,7 @@ const props = defineProps({
 
 const { getMeals } = useMensa()
 const { parseCalendarDate } = useCalendarDate();
-const selectedDate: Ref<CalendarDate> = useState("selected-date")
+const selectedDate: Ref<Date> = useState("selected-date")
 
 const weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 const timeSlots = [
@@ -85,7 +85,7 @@ const timeSlots = [
 
 const timestamp: Ref<number> = computed(() => {
     if (selectedDate.value) {
-        return parseCalendarDate(selectedDate.value).getTime() / 1000;
+        return selectedDate.value.getTime() / 1000;
     } else {
         return Math.floor((new Date()).getTime() / 1000);
     }

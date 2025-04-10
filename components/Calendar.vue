@@ -7,9 +7,18 @@ const df = new DateFormatter('en-US', {
 
 const date = new Date();
 
-const modelValue = useState("selected-date", (() => new CalendarDate(
-	date.getFullYear(), date.getMonth() + 1, date.getDate()))
-)
+const selectedDate = useState("selected-date", (() => (
+	new CalendarDate(
+		date.getFullYear(), date.getMonth() + 1, date.getDate()
+	)).toDate(getLocalTimeZone())))
+
+const modelValue = ref(new CalendarDate(
+	date.getFullYear(), date.getMonth() + 1, date.getDate()
+))
+
+watch(modelValue, (newDate) => {
+	selectedDate.value = newDate.toDate(getLocalTimeZone())
+})
 </script>
 
 <template>

@@ -12,7 +12,7 @@ const { schedule, pending, refresh } = useSchedule();
 const { CampusToSimple, timestampToMonday } = useDataTransform();
 const { parseCalendarDate } = useCalendarDate();
 
-const selectedDate: Ref<CalendarDate> = useState("selected-date")
+const selectedDate: Ref<Date> = useState("selected-date")
 
 definePageMeta({
 	layout: "dash",
@@ -24,7 +24,7 @@ const lessonsThisWeek = computed(() => {
 	if (!schedule.value) return [];
 
 	const monday = selectedDate.value
-		? timestampToMonday(parseCalendarDate(selectedDate.value).getTime() / 1000)
+		? timestampToMonday(selectedDate.value.getTime() / 1000)
 		: timestampToMonday(Math.floor(Date.now() / 1000));
 
 	const transformed = CampusToSimple(schedule.value);
