@@ -15,7 +15,7 @@
 			placeholder="Username"
 			v-model="username"
 			:class="{ 'border-red-500': !usernameValid }"
-			class="p-2 border rounded-sm" />
+			class="p-2 border rounded" />
 		<p v-if="!usernameValid" class="text-red-500 text-sm">Bitte geben Sie einen Benutzernamen ein.</p>
 
 		<input
@@ -25,10 +25,10 @@
 			placeholder="Passwort (Hash)"
 			v-model="password"
 			:class="{ 'border-red-500': !passwordValid }"
-			class="p-2 border rounded-sm" />
+			class="p-2 border rounded" />
 		<p v-if="!passwordValid" class="text-red-500 text-sm">Bitte geben Sie ein Passwort ein.</p>
 
-		<UButton @click="login" :loading="isLoading && !error" class="p-3 bg-primary text-text rounded-sm block">Login </UButton>
+		<UButton @click="login" :loading="isLoading && !error" class="p-3 bg-primary text-text rounded block">Login </UButton>
 
 		<p v-if="error" class="text-red-500 text-sm">
 			Der Login ist fehlgeschlagen. Überprüfe ob du tatsächlich deinen aktuellen Hash von der CampusDual API hast.
