@@ -27,7 +27,7 @@ import { validateInputs } from "../composables/validation";
             placeholder="Username"
             v-model="username"
             :class="{ 'border-red-500': !usernameValid }"
-            class="p-2 border rounded"
+            class="p-2 border rounded-sm"
         />
         <p v-if="!usernameValid" class="text-red-500 text-sm">
             Bitte geben Sie einen gültigen Benutzernamen ein.
@@ -40,7 +40,7 @@ import { validateInputs } from "../composables/validation";
             placeholder="Passwort (Hash)"
             v-model="password"
             :class="{ 'border-red-500': !passwordValid }"
-            class="p-2 border rounded"
+            class="p-2 border rounded-sm"
         />
         <p v-if="!passwordValid" class="text-red-500 text-sm">
             Bitte geben Sie ein gültiges Passwort ein.
@@ -49,7 +49,7 @@ import { validateInputs } from "../composables/validation";
         <UButton
             type="submit"
             :loading="isLoading && !error"
-            class="p-3 bg-primary text-text rounded block"
+            class="p-3 bg-primary text-text rounded-sm block"
             >Login
         </UButton>
 

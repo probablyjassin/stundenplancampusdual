@@ -1,9 +1,13 @@
 <template>
-    <div>
+    <UApp>
         <NuxtLayout>
             <NuxtPage />
+            <UButton
+                class="fixed bottom-4 right-4"
+                icon="mdi:help-circle"
+            ></UButton>
         </NuxtLayout>
-    </div>
+    </UApp>
 </template>
 
 <script setup>
