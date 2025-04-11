@@ -6,7 +6,7 @@
         <p>
             <b>{{ credits }}</b> Credit-Points
         </p>
-        <br>
+        <br />
         <p>Prüfungen: (WIP)</p>
         <p>
             {{ exams }}
@@ -15,13 +15,13 @@
 </template>
 
 <script setup>
-    definePageMeta({
-        layout: 'dash'
-    });
+definePageMeta({
+    layout: "dash",
+});
 
-    const { getCampusData } = useCampus()
+const { getCampusData } = useCampus();
 
-    const semester = ref(await getCampusData("semester"))
-    const credits = ref(await getCampusData("credits"))
-    const exams = ref(await getCampusData("exams"))
+const semester = ref(await getCampusData("semester"));
+const credits = ref(await getCampusData("credits"));
+const exams = ref(await getCampusData("exams"));
 </script>

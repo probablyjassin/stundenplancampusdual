@@ -4,41 +4,53 @@ const baseCampusURL = "https://selfservice.campus-dual.de";
 const baseCorsUrl = "https://corsproxy.io/?";
 
 export function useCampus() {
-	const username = useCookie("username");
-	const password = useCookie("password");
+    const username = useCookie("username");
+    const password = useCookie("password");
 
-	async function getCampusData(type: "room" | "timeline" | "credits" | "semester" | "exams") {
-		switch (type) {
-			case "room":
-				var urlPath = "/room/json"; // userid
-				break;
-			case "timeline":
-				var urlPath = "/dash/gettimeline"; // user
-				break;
-			case "credits":
-				var urlPath = "/dash/getcp"; // user
-				break;
-			case "semester":
-				var urlPath = "/dash/getfs"; // user
-				break;
-			case "exams":
-				var urlPath = "/dash/getexamstats"; // user
-				break;
+    async function getCampusData(
+        type: "room" | "timeline" | "credits" | "semester" | "exams",
+        credentials = { username: "", password: "" }
+    ) {
+        const uname = credentials?.username || username.value || "";
+        const pw = credentials?.password || password.value || "";
 
-			default:
-				throw new Error("Invalid type");
-		}
-		console.log("Getting data for", type);
-		const UrlParams = `?${type == "room" ? "userid" : "user"}=${username.value}&hash=${password.value}&t=${Math.floor(Date.now() / 1000)}&_=${Date.now()}`;
-		console.log("URL Params", UrlParams);
+        switch (type) {
+            case "room":
+                var urlPath = "/room/json"; // userid
+                break;
+            case "timeline":
+                var urlPath = "/dash/gettimeline"; // user
+                break;
+            case "credits":
+                var urlPath = "/dash/getcp"; // user
+                break;
+            case "semester":
+                var urlPath = "/dash/getfs"; // user
+                break;
+            case "exams":
+                var urlPath = "/dash/getexamstats"; // user
+                break;
 
-		const url = baseCorsUrl + encodeURIComponent(baseCampusURL + urlPath + UrlParams);
-		return await $fetch(url);
-	}
+            default:
+                throw new Error("Invalid type");
+        }
+        console.log("Getting data for", type);
+        const UrlParams = `?${
+            type == "room" ? "userid" : "user"
+        }=${uname}&hash=${pw}&t=${Math.floor(
+            Date.now() / 1000
+        )}&_=${Date.now()}`;
+        console.log("URL Params", UrlParams);
 
-	return {
-		username,
-		password,
-		getCampusData,
-	};
+        const url =
+            baseCorsUrl +
+            encodeURIComponent(baseCampusURL + urlPath + UrlParams);
+        return await $fetch(url);
+    }
+
+    return {
+        username,
+        password,
+        getCampusData,
+    };
 }
