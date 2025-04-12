@@ -1,25 +1,14 @@
-export default defineNuxtRouteMiddleware(async (to, from) => {
-	if (to.fullPath == "/stundenplan") {
-		return navigateTo("/dash/stundenplan");
-	}
-	if (import.meta.server) return true;
+export default defineNuxtRouteMiddleware((to) => {
+    const usernameCookie = useCookie("username");
+    const passwordCookie = useCookie("password");
+    const publicRoutes = ["/", "/login"];
 
-	const { getCampusData } = useCampus();
-	const isLoggedIn = useState("isLoggedIn", (() => false) as () => boolean);
+    if (publicRoutes.includes(to.path)) {
+        return;
+    }
 
-	if (!to.fullPath.includes("dash")) {
-		return true;
-	}
-
-	if (!isLoggedIn.value) {
-		try {
-			const response = await getCampusData("timeline");
-			isLoggedIn.value = !!(typeof response != "string");
-		} catch (error) {
-			isLoggedIn.value = false;
-		}
-	}
-
-	if (isLoggedIn.value) return true;
-	return navigateTo("/login");
+    if (!usernameCookie.value || !passwordCookie.value) {
+        console.log("not logged in");
+        return navigateTo("/login");
+    }
 });
