@@ -11,10 +11,13 @@ onMounted(() => {
     const isLoggedIn = useState("isLoggedIn");
     const username = useCookie("username", { sameSite: "strict" });
     const password = useCookie("password", { sameSite: "strict" });
-    localStorage.removeItem('stundenplan');
-
+    const data = useState("stundenplan");
+    const groupedByDay = useState("groupedByDay");
+    localStorage.removeItem("stundenplan");
     username.value = "";
     password.value = "";
+    data.value = [];
+    groupedByDay.value = {};
     isLoggedIn.value = false;
     router.push("/");
 });
