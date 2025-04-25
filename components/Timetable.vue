@@ -27,7 +27,11 @@
                     </td>
                     <td v-for="(day, index) in weekDays" :key="day"
                         class="px-3 py-2 border-b border-secondary-200 dark:border-secondary-800 align-top">
-                        <div v-if="getLessonForTimeAndDay(timeSlot.start, index)"
+
+                        <USkeleton v-if="pending"
+                            class="h-20 rounded-lg bg-secondary-200 dark:bg-secondary-800 p-3 opacity-25 flex items-center justify-center text-secondary-600 dark:text-secondary-400" />
+
+                        <div v-else-if="getLessonForTimeAndDay(timeSlot.start, index)"
                             class="rounded-lg bg-primary-50 dark:bg-primary-950 p-3 shadow-sm transition-all hover:shadow-md ring-1 ring-primary-100 dark:ring-primary-900">
                             <div class="font-medium text-primary-900 dark:text-primary-100 mb-2">
                                 {{ getLessonForTimeAndDay(timeSlot.start, index)?.description }}
@@ -66,8 +70,10 @@ const props = defineProps({
     lessons: {
         type: Array as PropType<CampusDataSimple[]>,
         required: true
-    }
+    },
 });
+
+const pending = useState("pending")
 
 const { getMeals } = useMensa()
 const { parseCalendarDate } = useCalendarDate();

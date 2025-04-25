@@ -2,6 +2,8 @@
 	<div class="p-4">
 		<Calendar></Calendar>
 		<Timetable :lessons="lessonsThisWeek" class="h-full"></Timetable>
+		{{ pending }}
+		{{ schedule }}
 	</div>
 </template>
 
@@ -42,6 +44,7 @@ watch([selectedDate, schedule], ([newDate, newSchedule]) => {
 }, { deep: true });
 
 onMounted(async () => {
+	pending.value = false;
 	refresh();
 });
 </script>

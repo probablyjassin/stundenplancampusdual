@@ -1,6 +1,8 @@
 export function useSchedule() {
 	const { getCampusData } = useCampus();
 
+	const pending = useState("pending", () => true)
+
 	const schedule = useState("stundenplan", () => {
 		// Initialize from localStorage if available
 		if (import.meta.client) {
@@ -8,11 +10,9 @@ export function useSchedule() {
 			return stored ? JSON.parse(stored) : null;
 		}
 	});
-	const pending = ref(false);
 
 	// Fetch fresh data and update if needed
 	const refresh = async () => {
-		pending.value = true;
 		try {
 			const fresh = await getCampusData("room");
 			if (fresh && JSON.stringify(fresh) !== JSON.stringify(schedule.value)) {
@@ -22,8 +22,6 @@ export function useSchedule() {
 		} catch (error) {
 			console.error("Failed to fetch schedule:", error);
 			return navigateTo("/");
-		} finally {
-			pending.value = false;
 		}
 	};
 
