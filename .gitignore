@@ -25,4 +25,7 @@ logs
 
 # Dev tools
 .direnv
+.envrc
 .vscode
+flake.nix
+flake.lock
