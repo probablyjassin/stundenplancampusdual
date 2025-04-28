@@ -30,12 +30,22 @@ export function useDataTransform() {
 		});
 		return weeks;
 	}
+	
+
+	function getMondayBeforeDateCopyrightBohdan(date: Date): Date {
+		const day = date.getDay(); // Get the current day (0-6, where 0 is Sunday)
+		const diff = day === 0 ? -6 : 1 - day; // Adjust for Monday (Sunday needs special handling)
+		date.setDate(date.getDate() + diff); // Adjust the date to the previous Monday
+		// Set time to start of day
+		date.setHours(0, 0, 0, 0);
+		return date; // Convert back to Unix timestamp
+	}
 
 	function timestampToMonday(timestamp: number): number {
 		const date = new Date(timestamp * 1000); // Convert Unix timestamp to milliseconds
 		const day = date.getDay(); // Get the current day (0-6, where 0 is Sunday)
-		const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Adjust for Monday
-		date.setDate(diff);
+		const diff = day === 0 ? -6 : 1 - day; // Adjust for Monday (Sunday needs special handling)
+		date.setDate(date.getDate() + diff); // Adjust the date to the previous Monday
 		// Set time to start of day
 		date.setHours(0, 0, 0, 0);
 		return Math.floor(date.getTime() / 1000); // Convert back to Unix timestamp
@@ -44,6 +54,7 @@ export function useDataTransform() {
 	return {
 		CampusToSimple,
 		timestampToMonday,
+		getMondayBeforeDateCopyrightBohdan
 		//groupByWeekday,
 	};
 }
