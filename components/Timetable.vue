@@ -29,10 +29,10 @@
                         class="px-3 py-2 border-b border-secondary-200 dark:border-secondary-800 align-top">
 
                         <USkeleton v-if="pending"
-                            class="h-32 w-72 p-3 rounded-lg bg-secondary-200 dark:bg-secondary-800 opacity-25 flex items-center justify-center text-secondary-600 dark:text-secondary-400 ring-1 ring-primary-100 dark:ring-primary-900" />
+                            class="h-32 w-46 p-3 rounded-lg bg-secondary-200 dark:bg-secondary-800 opacity-25 flex items-center justify-center text-secondary-600 dark:text-secondary-400 ring-1 ring-primary-100 dark:ring-primary-900" />
 
                         <div v-else-if="getLessonForTimeAndDay(timeSlot.start, index)"
-                            class="rounded-lg bg-primary-50 h-32 w-72 p-3 dark:bg-primary-950 shadow-sm transition-all hover:shadow-md ring-1 ring-primary-100 dark:ring-primary-900">
+                            class="rounded-lg bg-primary-50 h-32 w-46 p-3 dark:bg-primary-950 shadow-sm transition-all hover:shadow-md ring-1 ring-primary-100 dark:ring-primary-900">
                             <div class="font-medium text-primary-900 dark:text-primary-100 mb-2">
                                 {{ getLessonForTimeAndDay(timeSlot.start, index)?.description }}
                             </div>
@@ -45,8 +45,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div v-else
-                        class="h-32 w-72 p-3">
+                        <div v-else class="h-32 w-46 p-3">
 
                         </div>
                     </td>
