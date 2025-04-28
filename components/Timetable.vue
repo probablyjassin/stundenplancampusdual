@@ -22,17 +22,17 @@
             <tbody>
                 <tr v-for="timeSlot in timeSlots" :key="timeSlot.start">
                     <td
-                        class="sticky left-0 z-10 bg-secondary-100 dark:bg-primary-950 px-6 py-4 text-sm font-medium text-secondary-900 dark:text-secondary-100 border-b border-secondary-200 dark:border-secondary-800">
+                        class="sticky left-0 z-10 bg-secondary-100 dark:bg-primary-950 px-6 py-4 min-w-32 max-w-32 text-sm font-medium text-secondary-900 dark:text-secondary-100 border-b border-secondary-200 dark:border-secondary-800">
                         {{ timeSlot.start }} - {{ timeSlot.end }}
                     </td>
                     <td v-for="(day, index) in weekDays" :key="day"
                         class="px-3 py-2 border-b border-secondary-200 dark:border-secondary-800 align-top">
 
                         <USkeleton v-if="pending"
-                            class="h-20 rounded-lg bg-secondary-200 dark:bg-secondary-800 p-3 opacity-25 flex items-center justify-center text-secondary-600 dark:text-secondary-400" />
+                            class="h-32 w-72 p-3 rounded-lg bg-secondary-200 dark:bg-secondary-800 opacity-25 flex items-center justify-center text-secondary-600 dark:text-secondary-400 ring-1 ring-primary-100 dark:ring-primary-900" />
 
                         <div v-else-if="getLessonForTimeAndDay(timeSlot.start, index)"
-                            class="rounded-lg bg-primary-50 dark:bg-primary-950 p-3 shadow-sm transition-all hover:shadow-md ring-1 ring-primary-100 dark:ring-primary-900">
+                            class="rounded-lg bg-primary-50 h-32 w-72 p-3 dark:bg-primary-950 shadow-sm transition-all hover:shadow-md ring-1 ring-primary-100 dark:ring-primary-900">
                             <div class="font-medium text-primary-900 dark:text-primary-100 mb-2">
                                 {{ getLessonForTimeAndDay(timeSlot.start, index)?.description }}
                             </div>
@@ -44,6 +44,10 @@
                                     {{ getLessonForTimeAndDay(timeSlot.start, index)?.room }}
                                 </div>
                             </div>
+                        </div>
+                        <div v-else
+                        class="h-32 w-72 p-3">
+
                         </div>
                     </td>
                 </tr>
