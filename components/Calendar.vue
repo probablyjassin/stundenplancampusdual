@@ -28,7 +28,12 @@ watch(modelValue, (newDate) => {
 	<UPopover>
 		<UButton color="neutral" variant="subtle" icon="i-lucide-calendar">
 			{{ modelValue ? 
-			`${df.format(getMondayBeforeDateCopyrightBohdan(modelValue.toDate("Europe/Berlin")))} - ${df.format(getMondayBeforeDateCopyrightBohdan(modelValue.toDate("Europe/Berlin")))}`
+			`${
+			df.format(getMondayBeforeDateCopyrightBohdan(modelValue.toDate("Europe/Berlin")))
+			} - ${
+			 df.format(
+				getMondayBeforeDateCopyrightBohdan(modelValue.toDate("Europe/Berlin")))
+			}`
 			: 'Select a date' }}
 		</UButton>
 
